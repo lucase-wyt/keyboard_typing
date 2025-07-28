@@ -1,0 +1,72 @@
+{
+  "name": "programming-typing-practice",
+  "version": "1.0.0",
+  "description": "一个专门用于练习编程相关英语词汇的打字练习桌面应用",
+  "main": "src/main.js",
+  "homepage": "./",
+  "scripts": {
+    "start": "electron .",
+    "dev": "concurrently \"npm run react-dev\" \"wait-on http://localhost:3000 && electron . --dev\"",
+    "react-dev": "react-scripts start",
+    "react-build": "react-scripts build",
+    "build": "npm run react-build && electron-builder",
+    "dist": "npm run react-build && electron-builder --publish=never",
+    "electron-dev": "electron . --dev"
+  },
+  "keywords": [
+    "electron",
+    "typing",
+    "programming",
+    "vocabulary",
+    "practice"
+  ],
+  "author": "Lucas",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "concurrently": "^7.6.0",
+    "electron": "^37.2.0",
+    "electron-builder": "^23.0.0",
+    "react-scripts": "^5.0.1",
+    "wait-on": "^7.2.0"
+  },
+  "dependencies": {
+    "framer-motion": "^10.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.8.0",
+    "styled-components": "^5.3.6",
+    "xlsx": "^0.18.5"
+  },
+  "build": {
+    "appId": "com.programming.typing.practice",
+    "productName": "英语打字练习",
+    "asar": true,
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "build/**/*",
+      "src/main.js",
+      "src/preload.js",
+      "package.json"
+    ],
+    "extraResources": [],
+    "win": {
+      "target": "nsis"
+    }
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
