@@ -1,6 +1,10 @@
 import { useEffect } from 'react';
 import { useDatabase } from '../contexts/database';
-import { builtinLibraries, builtinSentences } from '../constants/database-init';
+import {
+  builtinLibraries,
+  builtinSentences,
+  builtinArticles,
+} from '../constants/database-init';
 export function useBuiltinLibraries() {
   const { db, isInitialized } = useDatabase();
 
@@ -37,6 +41,14 @@ export function useBuiltinLibraries() {
             updatedAt: new Date().toISOString(),
           });
         }
+        // 添加内置文章库
+        // for (const article of builtinArticles) {
+        //   await db.addLibrary({
+        //     ...article,
+        //     createdAt: new Date().toISOString(),
+        //     updatedAt: new Date().toISOString(),
+        //   });
+        // }
 
         console.log('内置词库初始化完成');
       } catch (error) {
@@ -48,7 +60,11 @@ export function useBuiltinLibraries() {
   }, [isInitialized, db]);
 
   return {
-    builtinLibraries: [...builtinLibraries, ...builtinSentences],
+    builtinLibraries: [
+      ...builtinLibraries,
+      ...builtinSentences,
+      //...builtinArticles,
+    ],
   };
 }
 

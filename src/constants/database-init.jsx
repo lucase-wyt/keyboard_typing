@@ -3,6 +3,32 @@ import pythonWords from './database-python-words';
 import reactWords from './database-react-words';
 import vueWords from './database-vue-words';
 import golangWords from './database-golang-words';
+import article1 from './database-article-1';
+import article2 from './database-article-2';
+import article3 from './database-article-3';
+import article4 from './database-article-4';
+import article5 from './database-article-5';
+import article6 from './database-article-6';
+import article7 from './database-article-7';
+import article8 from './database-article-8';
+import article9 from './database-article-9';
+import article10 from './database-article-10';
+
+// 内置文章
+export const builtinArticles = [
+  article1,
+  article2,
+  article3,
+  article4,
+  article5,
+  article6,
+  article7,
+  article8,
+  article9,
+  article10,
+];
+
+// 内置词库
 export const builtinLibraries = [
   jsWords,
   pythonWords,
