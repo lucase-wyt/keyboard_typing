@@ -5,8 +5,10 @@ import { SettingsProvider } from './contexts/setting';
 import { ThemeProvider } from './contexts/theme';
 import GlobalStyles from './styles/global';
 import LoadingScreen from './components/LoadingScreen';
-
+import { ConfigProvider, theme } from 'antd';
 import AppInitializer from './components/AppInitializer';
+import zhCN from 'antd/locale/zh_CN';
+import 'antd/dist/reset.css';
 
 import Router from './router';
 
@@ -59,14 +61,25 @@ function App() {
 
   return (
     <ThemeProvider>
-      <DatabaseProvider>
-        <SettingsProvider>
-          <AppInitializer>
-            <GlobalStyles />
-            <RouterProvider router={Router} />
-          </AppInitializer>
-        </SettingsProvider>
-      </DatabaseProvider>
+      <ConfigProvider
+        locale={zhCN}
+        theme={{
+          algorithm: theme.defaultAlgorithm,
+          token: {
+            colorPrimary: '#6366f1',
+            borderRadius: 8,
+          },
+        }}
+      >
+        <DatabaseProvider>
+          <SettingsProvider>
+            <AppInitializer>
+              <GlobalStyles />
+              <RouterProvider router={Router} />
+            </AppInitializer>
+          </SettingsProvider>
+        </DatabaseProvider>
+      </ConfigProvider>
     </ThemeProvider>
   );
 }

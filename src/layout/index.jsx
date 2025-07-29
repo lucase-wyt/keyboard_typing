@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import { Outlet } from 'react-router-dom';
+import React, { useState, useEffect, useContext } from 'react';
+import { Outlet, NavLink } from 'react-router-dom';
 import LoadingScreen from '../components/LoadingScreen';
-import Sidebar from '../components/Sidebar';
-
-import {
-  CompAppContainer,
-  CompMainContent,
-} from '../components/styled-components/styled-app';
-
-function Layout() {
+import { Layout, Menu, Avatar, Typography } from 'antd';
+const { Content, Sider } = Layout;
+const { Title, Text } = Typography;
+import { routes } from '../router'; // 导入路由配置
+function LayoutRender() {
+  const context = useContext('SettingsContext');
+  console.log('LayoutRender context:', context);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [collapsed, setCollapsed] = useState(false);
 
   useEffect(() => {
     // 初始化应用程序
@@ -56,13 +56,60 @@ function Layout() {
   }
 
   return (
-    <CompAppContainer>
-      <Sidebar />
-      <CompMainContent>
-        <Outlet />
-      </CompMainContent>
-    </CompAppContainer>
+    <Layout style={{ minHeight: '100vh' }} hasSider>
+      <Sider
+        collapsed={collapsed}
+        onCollapse={(collapsed, type) => setCollapsed(collapsed)}
+      >
+        <div
+          style={{
+            height: 64,
+            margin: 16,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: collapsed ? 'center' : 'flex-start',
+            color: '#fff',
+          }}
+        >
+          <Avatar
+            size={32}
+            icon={<span>⌨️ </span>}
+            style={{ backgroundColor: '#fff', color: '#667eea' }}
+          />
+          {!collapsed && (
+            <Title level={4} style={{ color: '#fff', margin: '0 0 0 12px' }}>
+              打字练习
+            </Title>
+          )}
+        </div>
+        <Menu
+          theme="dark"
+          mode="inline"
+          defaultSelectedKeys={['practice']}
+          items={routes
+            .filter((route) => !route.menuHidden)
+            .map((route) => ({
+              key: route.path,
+              label: (
+                <NavLink isActive={route.path === 'practice'} to={route.path}>
+                  {route.name}
+                </NavLink>
+              ),
+              icon: route.icon,
+              ...route,
+            }))}
+        />
+      </Sider>
+      <Layout>
+        <Content
+          theme="dark"
+          style={{ margin: '16px', height: '100vh', overflow: 'scroll' }}
+        >
+          <Outlet />
+        </Content>
+      </Layout>
+    </Layout>
   );
 }
 
-export default Layout;
+export default LayoutRender;

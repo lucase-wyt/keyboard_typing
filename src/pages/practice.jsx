@@ -2,21 +2,18 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useDatabase } from '../contexts/database';
 import { useSettings } from '../contexts/setting';
 import {
-  PageContainer,
-  PageTitle,
-  PracticeCard,
-  ControlPanel,
-  LibrarySelect,
-  ActionButtons,
-  TextDisplay,
   TextContent,
   InputArea,
   StatsPanel,
   StatCard,
   StatValue,
   StatLabel,
-  Button,
 } from '../components/styled-components/styled-page';
+import { Card, Button, Typography, Row, Col, Space, Select } from 'antd';
+import { TrophyOutlined } from '@ant-design/icons';
+
+const { Title, Text } = Typography;
+const { Option } = Select;
 
 // 内置练习文本
 const builtinTexts = {
@@ -229,36 +226,72 @@ function PracticePage() {
   };
 
   return (
-    <PageContainer>
-      <PageTitle>🚀 开始练习</PageTitle>
-
-      <PracticeCard>
-        <ControlPanel>
-          <LibrarySelect
-            value={selectedLibrary}
-            onChange={(e) => setSelectedLibrary(e.target.value)}
-          >
-            {libraries.map((library) => (
-              <option key={library.id} value={library.id}>
-                {library.name}
-              </option>
-            ))}
-          </LibrarySelect>
-
-          <ActionButtons>
-            <Button className="secondary" onClick={loadPracticeText}>
-              🔄 换一段
-            </Button>
-            <Button className="primary" onClick={resetPractice}>
-              🔁 重新开始
-            </Button>
-          </ActionButtons>
-        </ControlPanel>
-
-        <TextDisplay>
+    <div style={{ padding: '0 24px' }}>
+      <Title level={2}>
+        <TrophyOutlined style={{ color: '#6366f1', marginRight: 8 }} />
+        打字练习
+      </Title>
+      <Card style={{ marginBottom: 24 }}>
+        <Row gutter={16}>
+          <Col span={12}>
+            <Space direction="vertical" style={{ width: '100%' }}>
+              <Select
+                style={{ width: '100%' }}
+                onChange={(value) => {
+                  setSelectedLibrary(String(value));
+                }}
+                placeholder="选择一个词库"
+                size="large"
+              >
+                {libraries.map((library) => (
+                  <option key={library.id} value={library.id}>
+                    {library.name}
+                  </option>
+                ))}
+              </Select>
+            </Space>
+          </Col>
+          <Col span={12}>
+            <div
+              style={{
+                width: '100%',
+                display: 'flex',
+                justifyContent: 'flex-end',
+              }}
+            >
+              <Button size="large" type="default" onClick={loadPracticeText}>
+                换一段
+              </Button>
+              <Button
+                size="large"
+                type="primary"
+                style={{ marginLeft: '16px' }}
+                onClick={resetPractice}
+              >
+                重新开始
+              </Button>
+            </div>
+          </Col>
+        </Row>
+      </Card>
+      <Card style={{ marginBottom: 24 }}>
+        <div
+          style={{
+            marginBottom: '16px',
+            minHeight: '150px',
+            background: 'rgb(248, 249, 250)',
+            borderRadius: '12px',
+            padding: '30px',
+            marginBottom: '20px',
+            fontSize: '18px',
+            lineHeight: '1.8',
+            fontFamily: '"Courier New", monospace',
+            minHeight: '200px',
+            position: 'relative',
+          }}
+        >
           <TextContent>{renderTextWithHighlight()}</TextContent>
-        </TextDisplay>
-
+        </div>
         <InputArea
           ref={inputRef}
           value={userInput}
@@ -266,7 +299,6 @@ function PracticePage() {
           placeholder="开始输入上面的文本..."
           disabled={isCompleted}
         />
-
         <StatsPanel>
           <StatCard>
             <StatValue>{stats.wpm}</StatValue>
@@ -291,15 +323,13 @@ function PracticePage() {
             <h3 style={{ color: '#26de81', marginBottom: '15px' }}>
               🎉 练习完成！
             </h3>
-            <ActionButtons>
-              <Button className="success" onClick={loadPracticeText}>
-                继续练习
-              </Button>
-            </ActionButtons>
+            <Button size="large" type="primary" onClick={loadPracticeText}>
+              继续练习
+            </Button>
           </div>
         )}
-      </PracticeCard>
-    </PageContainer>
+      </Card>
+    </div>
   );
 }
 

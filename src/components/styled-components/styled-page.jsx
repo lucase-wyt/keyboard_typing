@@ -357,17 +357,15 @@ export const TextDisplay = styled.div`
 
 export const TextContent = styled.div`
   white-space: pre-wrap;
-
+  line-height: 1.6;
+  font-family: 'Courier New', monospace;
+  font-size: 18px;
   .correct {
-    background-color: #d4edda;
-    color: #155724;
+    color: green;
   }
-
   .incorrect {
-    background-color: #f8d7da;
-    color: #721c24;
+    color: red;
   }
-
   .current {
     background-color: #667eea;
     color: white;
