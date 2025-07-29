@@ -46,9 +46,12 @@ function PracticePage() {
   const [endTime, setEndTime] = useState(null);
   const [isStarted, setIsStarted] = useState(false);
   const [isCompleted, setIsCompleted] = useState(false);
+  const countRecords = useRef({
+    len: 0,
+    next: 0,
+  });
+  const librariesRef = useRef(null);
   const [stats, setStats] = useState({
-    wpm: 0,
-    accuracy: 100,
     errors: 0,
     timeElapsed: 0,
   });
@@ -60,16 +63,14 @@ function PracticePage() {
 
   useEffect(() => {
     if (selectedLibrary) {
+      resetPractice();
       loadPracticeText();
     }
   }, [selectedLibrary]);
 
   useEffect(() => {
     if (isStarted && !isCompleted) {
-      const interval = setInterval(() => {
-        updateStats();
-      }, 1000);
-      return () => clearInterval(interval);
+      updateStats();
     }
   }, [isStarted, isCompleted, userInput]);
 
@@ -89,9 +90,14 @@ function PracticePage() {
       const level = selectedLibrary.replace('builtin-', '');
       const texts = builtinTexts[level];
       if (texts) {
-        const randomText = texts[Math.floor(Math.random() * texts.length)];
+        librariesRef.current = texts;
+        const randomText = texts[0];
         setCurrentText(randomText);
         setCurrentTextItem(randomText);
+        countRecords.current = {
+          len: texts.length,
+          next: 1,
+        };
       }
     } else {
       // 从数据库加载自定义词库
@@ -99,15 +105,35 @@ function PracticePage() {
         (lib) => lib.id.toString() === selectedLibrary,
       );
       if (library && library.words) {
-        const randomText =
-          library.words[Math.floor(Math.random() * library.words.length)];
+        librariesRef.current = library.words;
+        const randomText = library.words[0];
+        countRecords.current = {
+          len: library.words.length,
+          next: 1,
+        };
         setCurrentTextItem(randomText);
         if (randomText?.key) setCurrentText(randomText?.key);
         else setCurrentText(randomText);
       }
     }
-    resetPractice();
   };
+  const nextPracticeText = useCallback(() => {
+    if (!librariesRef.current || librariesRef.current.length === 0) return;
+    if (countRecords.current.next >= countRecords.current.len) {
+      countRecords.current.next = 0;
+      return;
+    }
+    const randomText = librariesRef.current[countRecords.current.next];
+    if (randomText?.key) setCurrentText(randomText?.key);
+    else setCurrentText(randomText);
+    setCurrentTextItem(randomText);
+    if (countRecords.current.next === countRecords.current.len - 1) {
+      setIsCompleted(true);
+      setEndTime(Date.now());
+      savePracticeRecord();
+    }
+    countRecords.current.next += 1;
+  }, [selectedLibrary]);
 
   const resetPractice = () => {
     setUserInput('');
@@ -115,9 +141,11 @@ function PracticePage() {
     setEndTime(null);
     setIsStarted(false);
     setIsCompleted(false);
+    countRecords.current = {
+      len: librariesRef.current?.length || 0,
+      next: 0,
+    };
     setStats({
-      wpm: 0,
-      accuracy: 100,
       errors: 0,
       timeElapsed: 0,
     });
@@ -133,10 +161,11 @@ function PracticePage() {
     if (!startTime || isCompleted) return;
 
     const now = Date.now();
-    const timeElapsed = Math.floor((now - startTime) / 1000);
-    const wordsTyped = userInput.trim().split(/\s+/).length;
-    const wpm =
-      timeElapsed > 0 ? Math.round((wordsTyped / timeElapsed) * 60) : 0;
+    //计算用时格式小时:分钟:秒
+    const timeElapsed = Math.floor((now - startTime) / 1000); // 转换为秒
+    const hours = Math.floor(timeElapsed / 3600);
+    const minutes = Math.floor((timeElapsed % 3600) / 60);
+    const seconds = timeElapsed % 60;
 
     let errors = 0;
     for (let i = 0; i < userInput.length; i++) {
@@ -144,17 +173,9 @@ function PracticePage() {
         errors++;
       }
     }
-
-    const accuracy =
-      userInput.length > 0
-        ? Math.round(((userInput.length - errors) / userInput.length) * 100)
-        : 100;
-
     setStats({
-      wpm,
-      accuracy,
-      errors,
-      timeElapsed,
+      errors: stats.errors + errors,
+      timeElapsed: `${hours || 0}时${minutes || 0}分${seconds || 0}秒`,
     });
   };
 
@@ -166,13 +187,6 @@ function PracticePage() {
     }
 
     setUserInput(value);
-
-    // 检查是否完成
-    if (value === currentText) {
-      setIsCompleted(true);
-      setEndTime(Date.now());
-      savePracticeRecord();
-    }
   };
 
   const savePracticeRecord = async () => {
@@ -224,7 +238,22 @@ function PracticePage() {
       </>
     );
   };
-
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+    window.addEventListener('keyup', (e) => {
+      if (e.key === 'Enter') {
+        setUserInput('');
+        inputRef.current?.focus();
+        nextPracticeText();
+        return false;
+      }
+    });
+    return () => {
+      window.removeEventListener('keyup', null);
+    };
+  }, []);
   return (
     <div style={{ padding: '0 24px' }}>
       <Title level={2}>
@@ -259,7 +288,7 @@ function PracticePage() {
                 justifyContent: 'flex-end',
               }}
             >
-              <Button size="large" type="default" onClick={loadPracticeText}>
+              <Button size="large" type="default" onClick={nextPracticeText}>
                 换一段
               </Button>
               <Button
@@ -301,19 +330,7 @@ function PracticePage() {
         />
         <StatsPanel>
           <StatCard>
-            <StatValue>{stats.wpm}</StatValue>
-            <StatLabel>WPM (词/分钟)</StatLabel>
-          </StatCard>
-          <StatCard>
-            <StatValue>{stats.accuracy}%</StatValue>
-            <StatLabel>准确率</StatLabel>
-          </StatCard>
-          <StatCard>
-            <StatValue>{stats.errors}</StatValue>
-            <StatLabel>错误数</StatLabel>
-          </StatCard>
-          <StatCard>
-            <StatValue>{stats.timeElapsed}s</StatValue>
+            <StatValue>{stats.timeElapsed}</StatValue>
             <StatLabel>用时</StatLabel>
           </StatCard>
         </StatsPanel>
@@ -323,9 +340,6 @@ function PracticePage() {
             <h3 style={{ color: '#26de81', marginBottom: '15px' }}>
               🎉 练习完成！
             </h3>
-            <Button size="large" type="primary" onClick={loadPracticeText}>
-              继续练习
-            </Button>
           </div>
         )}
       </Card>
