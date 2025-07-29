@@ -4,7 +4,6 @@ import App from './App';
 import './styles/index.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-console.log('Starting React application...');
 root.render(
   <React.StrictMode>
     <App />

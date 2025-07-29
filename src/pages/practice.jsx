@@ -41,8 +41,9 @@ function PracticePage() {
   const { db, isInitialized } = useDatabase();
   const { settings } = useSettings();
   const [libraries, setLibraries] = useState([]);
-  const [selectedLibrary, setSelectedLibrary] = useState('builtin-beginner');
+  const [selectedLibrary, setSelectedLibrary] = useState('beginner');
   const [currentText, setCurrentText] = useState('');
+  const [currentTextItem, setCurrentTextItem] = useState(null);
   const [userInput, setUserInput] = useState('');
   const [startTime, setStartTime] = useState(null);
   const [endTime, setEndTime] = useState(null);
@@ -93,6 +94,7 @@ function PracticePage() {
       if (texts) {
         const randomText = texts[Math.floor(Math.random() * texts.length)];
         setCurrentText(randomText);
+        setCurrentTextItem(randomText);
       }
     } else {
       // 从数据库加载自定义词库
@@ -102,7 +104,9 @@ function PracticePage() {
       if (library && library.words) {
         const randomText =
           library.words[Math.floor(Math.random() * library.words.length)];
-        setCurrentText(randomText);
+        setCurrentTextItem(randomText);
+        if (randomText?.key) setCurrentText(randomText?.key);
+        else setCurrentText(randomText);
       }
     }
     resetPractice();
@@ -199,7 +203,7 @@ function PracticePage() {
   const renderTextWithHighlight = () => {
     if (!currentText) return '';
 
-    return currentText.split('').map((char, index) => {
+    const renderedChars = currentText.split('').map((char, index) => {
       let className = '';
 
       if (index < userInput.length) {
@@ -209,11 +213,19 @@ function PracticePage() {
       }
 
       return (
-        <span key={index} className={className}>
-          {char}
-        </span>
+        <>
+          <span key={index} className={className}>
+            {char}
+          </span>
+        </>
       );
     });
+    return (
+      <>
+        <div>{renderedChars}</div>
+        <div>{currentTextItem?.desc ?? ''}</div>
+      </>
+    );
   };
 
   return (
@@ -226,9 +238,6 @@ function PracticePage() {
             value={selectedLibrary}
             onChange={(e) => setSelectedLibrary(e.target.value)}
           >
-            <option value="builtin-beginner">内置 - 初级</option>
-            <option value="builtin-intermediate">内置 - 中级</option>
-            <option value="builtin-advanced">内置 - 高级</option>
             {libraries.map((library) => (
               <option key={library.id} value={library.id}>
                 {library.name}
