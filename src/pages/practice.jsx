@@ -11,28 +11,10 @@ import {
 } from '../components/styled-components/styled-page';
 import { Card, Button, Typography, Row, Col, Space, Select } from 'antd';
 import { TrophyOutlined } from '@ant-design/icons';
+import { KEYTYPES } from '../constants/type';
 
 const { Title, Text } = Typography;
 const { Option } = Select;
-
-// 内置练习文本
-const builtinTexts = {
-  beginner: [
-    'hello world welcome to typing practice',
-    'the quick brown fox jumps over the lazy dog',
-    'practice makes perfect keep typing every day',
-  ],
-  intermediate: [
-    "Programming is not about typing, it's about thinking and problem solving.",
-    'The best way to learn programming is to practice coding every single day.',
-    'Technology is best when it brings people together and makes life easier.',
-  ],
-  advanced: [
-    'In the rapidly evolving landscape of modern technology, artificial intelligence and machine learning have emerged as transformative forces that are reshaping industries and revolutionizing the way we approach complex problems.',
-    'The intersection of creativity and technology continues to produce remarkable innovations that push the boundaries of what was previously thought possible in fields ranging from healthcare to entertainment.',
-    'Successful software development requires not only technical expertise but also strong communication skills, collaborative teamwork, and a deep understanding of user needs and business requirements.',
-  ],
-};
 
 function PracticePage() {
   const { db, isInitialized } = useDatabase();
@@ -86,35 +68,43 @@ function PracticePage() {
   };
 
   const loadPracticeText = () => {
-    if (selectedLibrary.startsWith('builtin-')) {
-      const level = selectedLibrary.replace('builtin-', '');
-      const texts = builtinTexts[level];
-      if (texts) {
-        librariesRef.current = texts;
-        const randomText = texts[0];
-        setCurrentText(randomText);
-        setCurrentTextItem(randomText);
-        countRecords.current = {
-          len: texts.length,
-          next: 1,
-        };
-      }
-    } else {
-      // 从数据库加载自定义词库
-      const library = libraries.find(
-        (lib) => lib.id.toString() === selectedLibrary,
-      );
-      if (library && library.words) {
-        librariesRef.current = library.words;
-        const randomText = library.words[0];
-        countRecords.current = {
-          len: library.words.length,
-          next: 1,
-        };
-        setCurrentTextItem(randomText);
-        if (randomText?.key) setCurrentText(randomText?.key);
-        else setCurrentText(randomText);
-      }
+    // 从数据库加载自定义词库
+    const library = libraries.find(
+      (lib) => lib.id.toString() === selectedLibrary,
+    );
+    if (!library) return false;
+    if (library.type === KEYTYPES.WORDS) {
+      //词库
+      librariesRef.current = library.words;
+      const randomText = library.words[0];
+      countRecords.current = {
+        len: library.words.length,
+        next: 1,
+      };
+      setCurrentTextItem(randomText);
+      setCurrentText(randomText?.key);
+    }
+    //句子
+    if (library.type === KEYTYPES.SENTENCES) {
+      librariesRef.current = library.words;
+      const randomText = library.words[0];
+      countRecords.current = {
+        len: library.words.length,
+        next: 1,
+      };
+      setCurrentTextItem(randomText);
+      setCurrentText(randomText);
+    }
+    //文章
+    if (library.type === KEYTYPES.ARTICLES) {
+      librariesRef.current = library.text;
+      const randomText = library.text;
+      countRecords.current = {
+        len: 1,
+        next: 1,
+      };
+      setCurrentTextItem(randomText);
+      setCurrentText(randomText);
     }
   };
   const nextPracticeText = useCallback(() => {

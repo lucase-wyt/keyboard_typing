@@ -3,6 +3,7 @@ import pythonWords from './database-python-words';
 import reactWords from './database-react-words';
 import vueWords from './database-vue-words';
 import golangWords from './database-golang-words';
+import lodashWords from './database-lodash-words';
 import article1 from './database-article-1';
 import article2 from './database-article-2';
 import article3 from './database-article-3';
@@ -35,6 +36,7 @@ export const builtinLibraries = [
   reactWords,
   vueWords,
   golangWords,
+  lodashWords,
 ];
 
 // 内置句子库
