@@ -56,11 +56,6 @@ const reactWords = {
       desc: '一个用于管理应用状态的库，常与 React 一起使用',
     },
     {
-      key: 'react-router',
-      name: 'React Router',
-      desc: '用于在 React 应用中实现路由功能的库',
-    },
-    {
       key: 'useRef',
       name: 'useRef',
       desc: 'React Hook，用于访问组件中的 DOM 元素',

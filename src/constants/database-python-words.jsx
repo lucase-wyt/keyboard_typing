@@ -6,6 +6,196 @@ const pythonWords = {
   isBuiltin: true,
   words: [
     {
+      key: 'intersection',
+      name: '交集函数',
+      desc: '用于计算两个集合的交集的内置函数: set1.intersection(set2) 返回两个集合中都包含的元素',
+    },
+    {
+      key: 'union',
+      name: '并集函数',
+      desc: '用于计算两个集合的并集的内置函数: set1.union(set2) 返回两个集合中的所有元素',
+    },
+    {
+      key: 'difference',
+      name: '差集函数',
+      desc: '用于计算两个集合的差集的内置函数: set1.difference(set2) 返回在第一个集合中但不在第二个集合中的元素',
+    },
+    {
+      key: 'symmetric_difference',
+      name: '对称差集函数',
+      desc: '用于计算两个集合的对称差集的内置函数: set1.symmetric_difference(set2) 返回在两个集合中但不在交集中的元素',
+    },
+    {
+      key: 'add',
+      name: '添加元素函数',
+      desc: '用于向集合中添加元素的内置函数: set.add(element) 将 element 添加到集合中',
+    },
+    {
+      key: 'update',
+      name: '更新集合函数',
+      desc: '用于向集合中添加多个元素的内置函数: set.update(iterable) 将 iterable 中的所有元素添加到集合中',
+    },
+    {
+      key: 'discard',
+      name: '移除元素函数',
+      desc: '用于从集合中移除元素的内置函数: set.discard(element) 如果 element 在集合中则将其移除，否则不做任何操作',
+    },
+    {
+      key: 'pop',
+      name: '弹出元素函数',
+      desc: '用于从集合中随机弹出一个元素的内置函数: set.pop() 返回并移除集合中的一个随机元素，如果集合为空则抛出 KeyError 异常',
+    },
+    {
+      key: 'clear',
+      name: '清空集合函数',
+      desc: '用于清空集合中所有元素的内置函数: set.clear() 移除集合中的所有元素，使其变为空集合',
+    },
+    {
+      key: 'isdisjoint',
+      name: '不相交检查函数',
+      desc: '用于检查两个集合是否不相交的内置函数: set1.isdisjoint(set2) 返回 True 如果两个集合没有共同元素',
+    },
+    {
+      key: 'frozenset',
+      name: '不可变集合类型',
+      desc: '用于创建不可变集合的内置类型: frozenset(iterable) 返回一个不可变的集合对象，不能修改其元素',
+    },
+    {
+      key: 'remove',
+      name: '删除元素函数',
+      desc: '用于从集合中删除元素的内置函数: set.remove(element) 如果 element 在集合中则将其删除，否则抛出 KeyError 异常',
+    },
+    {
+      key: 'issubset',
+      name: '子集检查函数',
+      desc: '用于检查一个集合是否是另一个集合的子集的内置函数: set1.issubset(set2) 返回 True 如果 set1 是 set2 的子集',
+    },
+    {
+      key: 'issuperset',
+      name: '超集检查函数',
+      desc: '用于检查一个集合是否是另一个集合的超集的内置函数: set1.issuperset(set2) 返回 True 如果 set1 是 set2 的超集',
+    },
+    {
+      key: 'capitalize',
+      name: '首字母大写函数',
+      desc: '用于将字符串的首字母转换为大写的内置函数: "hello".capitalize() 返回 "Hello"',
+    },
+    {
+      key: 'title',
+      name: '标题化函数',
+      desc: '用于将字符串的每个单词的首字母转换为大写的内置函数: "hello world".title() 返回 "Hello World"',
+    },
+    {
+      key: 'lower',
+      name: '小写函数',
+      desc: '用于将字符串转换为小写的内置函数: "HELLO".lower() 返回 "hello"',
+    },
+    {
+      key: 'upper',
+      name: '大写函数',
+      desc: '用于将字符串转换为大写的内置函数: "hello".upper() 返回 "HELLO"',
+    },
+    {
+      key: 'find',
+      name: '查找函数',
+      desc: '用于在字符串中查找子字符串并返回其最低索引的内置函数: "hello".find("e") 返回 1',
+    },
+    {
+      key: 'index',
+      name: '索引函数',
+      desc: '用于在字符串中查找子字符串并返回其最低索引的内置函数（找不到时抛出异常）: "hello".index("e") 返回 1',
+    },
+    {
+      key: 'rfind',
+      name: '反向查找函数',
+      desc: '用于在字符串中反向查找子字符串并返回其最高索引的内置函数: "hello".rfind("l") 返回 3',
+    },
+    {
+      key: 'startswith',
+      name: '开始函数',
+      desc: '用于检查字符串是否以指定子字符串开头的内置函数: "hello".startswith("he") 返回 True',
+    },
+    {
+      key: 'endswith',
+      name: '结束函数',
+      desc: '用于检查字符串是否以指定子字符串结尾的内置函数: "hello".endswith("lo") 返回 True',
+    },
+    {
+      key: 'isdigit',
+      name: '数字检查函数',
+      desc: '用于检查字符串是否只包含数字字符的内置函数: "123".isdigit() 返回 True',
+    },
+    {
+      key: 'isalpha',
+      name: '字母检查函数',
+      desc: '用于检查字符串是否只包含字母字符的内置函数: "abc".isalpha() 返回 True',
+    },
+    {
+      key: 'isalnum',
+      name: '字母数字检查函数',
+      desc: '用于检查字符串是否只包含字母和数字字符的内置函数: "abc123".isalnum() 返回 True',
+    },
+    {
+      key: 'center',
+      name: '居中函数',
+      desc: '用于将字符串居中并使用指定字符填充的内置函数: "hello".center(11, "*") 返回 "***hello***"',
+    },
+    {
+      key: 'rjust',
+      name: '右对齐函数',
+      desc: '用于将字符串右对齐并使用指定字符填充的内置函数: "hello".rjust(10, "-") 返回 "-----hello"',
+    },
+    {
+      key: 'ljust',
+      name: ' 左对齐函数',
+      desc: '用于将字符串左对齐并使用指定字符填充的内置函数: "hello".ljust(10, "-") 返回 "hello-----"',
+    },
+    {
+      key: 'zfill',
+      name: '填充函数',
+      desc: '用于在字符串左侧填充零以达到指定长度的内置函数: "42".zfill(5) 返回 "00042"',
+    },
+    {
+      key: 'strip',
+      name: '去除空白函数',
+      desc: '用于去除字符串两端的空白字符的内置函数: "  hello  ".strip() 返回 "hello"',
+    },
+    {
+      key: 'replace',
+      name: '替换函数',
+      desc: '用于将字符串中的指定子字符串替换为另一个子字符串的内置函数: "hello world".replace("world", "Python") 返回 "hello Python"',
+    },
+    {
+      key: 'split',
+      name: '分割函数',
+      desc: '用于将字符串分割为子字符串列表的内置函数: "a,b,c".split(",") 返回 ["a", "b", "c"]',
+    },
+    {
+      key: 'encode',
+      name: '编码函数',
+      desc: '用于将字符串编码为字节序列的内置函数: "hello".encode("utf-8") 返回 b"hello"',
+    },
+    {
+      key: 'decode',
+      name: '解码函数',
+      desc: '用于将字节序列解码为字符串的内置函数: b"hello".decode("utf-8") 返回 "hello"',
+    },
+    {
+      key: 'join',
+      name: '连接函数',
+      desc: '用于将字符串列表连接为单个字符串的内置函数: ",".join(["a", "b", "c"]) 返回 "a,b,c"',
+    },
+    {
+      key: 'ord',
+      name: '字符编码函数',
+      desc: '用于返回字符的Unicode码点的内置函数:ord("A") 返回65',
+    },
+    {
+      key: 'range',
+      name: '范围函数',
+      desc: '用于生成一个整数序列的内置函数:range(1, 101),range(1, 101, 2)',
+    },
+    {
       key: 'int',
       name: '整数类型',
       desc: 'Python中的整数类型，表示没有小数部分的数字',
@@ -34,6 +224,51 @@ const pythonWords = {
       key: 'dict',
       name: '字典类型',
       desc: 'Python中的字典类型，表示键值对的集合',
+    },
+    {
+      key: 'get',
+      name: '获取字典值函数',
+      desc: '可以通过Python内置函数get获取字典中的值 value = my_dict.get(key, default_value) 如果key存在则返回对应的值，否则返回default_value',
+    },
+    {
+      key: 'keys()',
+      name: '获取字典键函数',
+      desc: '可以通过Python内置函数keys获取字典中的所有键 keys = my_dict.keys() 返回一个包含字典所有键的视图对象',
+    },
+    {
+      key: 'values()',
+      name: '获取字典值函数',
+      desc: '可以通过Python内置函数values获取字典中的所有值 values = my_dict.values() 返回一个包含字典所有值的视图对象',
+    },
+    {
+      key: 'items()',
+      name: '获取字典项函数',
+      desc: '可以通过Python内置函数items获取字典中的所有键值对 items = my_dict.items() 返回一个包含字典所有键值对的视图对象',
+    },
+    {
+      key: 'pop()',
+      name: '弹出字典项函数',
+      desc: '可以通过Python内置函数pop从字典中移除并返回指定键的值 value = my_dict.pop(key, default_value) 如果key存在则移除并返回对应的值，否则返回default_value',
+    },
+    {
+      key: 'popitem()',
+      name: '弹出字典最后一项函数',
+      desc: '可以通过Python内置函数popitem从字典中移除并返回最后一个键值对 item = my_dict.popitem() 返回一个包含被移除的键值对的元组',
+    },
+    {
+      key: 'setdefault()',
+      name: '设置默认字典项函数',
+      desc: '可以通过Python内置函数setdefault设置字典中的默认值 value = my_dict.setdefault(key, default_value) 如果key存在则返回对应的值，否则将key设置为default_value并返回default_value',
+    },
+    {
+      key: 'update()',
+      name: '更新字典函数',
+      desc: '可以通过Python内置函数update更新字典中的键值对 my_dict.update(other_dict) 将other_dict中的键值对添加到my_dict中，如果键已存在则更新对应的值',
+    },
+    {
+      key: 'zip',
+      name: '打包函数',
+      desc: "可以通过Python内置函数zip压缩两个序列并创建字典 items1 = dict(zip('ABCDE', '12345')) print(items1)    # {'A': '1', 'B': '2', 'C': '3', 'D': '4', 'E': '5'}",
     },
     {
       key: 'set',

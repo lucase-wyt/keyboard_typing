@@ -12,8 +12,13 @@ const golangWords = {
     },
     {
       key: 'make()',
-      name: 'make()',
-      desc: '用于创建切片、映射和通道',
+      name: '分配内存',
+      desc: '用于内置引用类型（切片、map 和管道）',
+    },
+    {
+      key: 'new()',
+      name: '分配内存',
+      desc: '用于值类型和用户定义的类型，如自定义结构',
     },
     {
       key: 'append()',
@@ -71,12 +76,12 @@ const golangWords = {
       desc: '在函数返回之前执行的语句',
     },
     {
-      key: 'panic',
-      name: '恐慌',
+      key: 'panic()',
+      name: '错误处理机制',
       desc: '用于触发运行时错误，通常会导致程序崩溃',
     },
     {
-      key: 'recover',
+      key: 'recover()',
       name: '恢复',
       desc: '用于从 panic 中恢复，防止程序崩溃',
     },
@@ -108,22 +113,22 @@ const golangWords = {
     {
       key: 'strings.Contains()',
       name: '字符串包含',
-      desc: '检查字符串是否包含子字符串',
+      desc: '检查字符串是否包含子字符串 strings.Contains(s, substr string) bool',
     },
     {
       key: 'strings.Split()',
       name: '字符串分割',
-      desc: '将字符串分割为子字符串切片',
+      desc: 'strings.Split(s, sep) 用于自定义分割符号来对指定字符串进行分割，同样返回 slice：strings.Split(s, sep string) []string',
     },
     {
       key: 'strings.Join()',
       name: '字符串连接',
-      desc: '将字符串切片连接为一个字符串',
+      desc: '将字符串切片连接为一个字符串,strings.Join(sl []string, sep string) string',
     },
     {
       key: 'strings.Replace()',
       name: '字符串替换',
-      desc: '替换字符串中的指定子字符串',
+      desc: '替换字符串中的指定子字符串 strings.Replace(str, old, new string, n int) string ;Replace() 用于将字符串 str 中的前 n 个字符串 old 替换为字符串 new，并返回一个新的字符串，如果 n = -1 则替换所有字符串 old 为字符串 new',
     },
     {
       key: 'strings.ToUpper()',
@@ -140,6 +145,18 @@ const golangWords = {
       name: '字符串修剪',
 
       desc: '去除字符串两端的空白字符',
+    },
+    {
+      key: 'strings.TrimLeft()',
+      name: '字符串修剪',
+
+      desc: '去除字符串左侧的空白字符',
+    },
+    {
+      key: 'strings.TrimRight()',
+      name: '字符串修剪',
+
+      desc: '去除字符串右侧的空白字符',
     },
     {
       key: 'sort',
@@ -557,6 +574,56 @@ const golangWords = {
       key: 'time.Now().Location()',
       name: '获取时区',
       desc: '返回当前时间所在的时区',
+    },
+    {
+      key: 'strings.HasSuffix()',
+      name: '检查字符串结尾',
+      desc: 'strings.HasSuffix(s, suffix string) bool',
+    },
+    {
+      key: 'strings.HasPrefix()',
+      name: '检查字符串开头',
+      desc: 'strings.HasPrefix(s, prefix string) bool',
+    },
+    {
+      key: 'strings.Index()',
+      name: ' 判断子字符串或字符在父字符串中出现的位置（索引）',
+      desc: 'strings.Index(s, str string) int',
+    },
+    {
+      key: 'strings.LastIndex()',
+      name: ' 判断子字符串或字符在父字符串中出现的位置（索引）',
+      desc: ' 返回字符串 str 在字符串 s 中最后出现位置的索引（str 的第一个字符的索引），-1 表示字符串 s 不包含字符串 str： strings.LastIndex(s, str string) int',
+    },
+    {
+      key: 'strings.IndexRune()',
+      name: ' 判断子字符串或字符在父字符串中出现的位置（索引）',
+      desc: 'strings.IndexRune(s, r rune) int 如果需要查询非 ASCII 编码的字符在父字符串中的位置，建议使用以下函数来对字符进行定位：',
+    },
+    {
+      key: 'strings.Count()',
+      name: ' 统计字符串出现次数',
+      desc: ' 用于计算字符串 str 在字符串 s 中出现的非重叠次数：strings.Count(s, str string) int',
+    },
+    {
+      key: 'strings.Repeat()',
+      name: ' 重复字符串',
+      desc: ' Repeat() 用于重复 count 次字符串 s 并返回一个新的字符串 strings.Repeat(s, count int) string',
+    },
+    {
+      key: 'strings.TrimSpace()',
+      name: ' 修剪字符串',
+      desc: ' 你可以使用 strings.TrimSpace(s) 来剔除字符串开头和结尾的空白符号',
+    },
+    {
+      key: 'strings.Fields()',
+      name: ' 分割字符串',
+      desc: '  将会利用 1 个或多个空白符号来作为动态长度的分隔符将字符串分割成若干小块，并返回一个 slice，如果字符串只包含空白符号，则返回一个长度为 0 的 slice：strings.Fields(s string) []string',
+    },
+    {
+      key: 'strings.NewReader()',
+      name: ' 从字符串中读取内容',
+      desc: '  函数 strings.NewReader(str) 用于生成一个 Reader 并读取字符串中的内容，然后返回指向该 Reader 的指针',
     },
   ],
 };
