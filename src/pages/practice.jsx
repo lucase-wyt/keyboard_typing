@@ -61,7 +61,19 @@ function PracticePage() {
 
     try {
       const dbLibraries = await db.getLibraries();
-      setLibraries(dbLibraries);
+      /**
+       * 过滤掉重复的词库
+       */
+      let librariIds = [];
+      const uniqueLibraries = dbLibraries.filter((v, i, a) => {
+        if (librariIds.includes(`${v.name}-${v.type}`)) {
+          return false;
+        } else {
+          librariIds.push(`${v.name}-${v.type}`);
+          return true;
+        }
+      });
+      setLibraries(uniqueLibraries);
     } catch (error) {
       console.error('加载词库失败:', error);
     }
