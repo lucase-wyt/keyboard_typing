@@ -6,6 +6,22 @@ const pythonWords = {
   isBuiltin: true,
   words: [
     {
+      key: 'private',
+      name: '私有属性',
+      desc: '在类中使用双下划线前缀（如 __attribute）定义的属性，表示该属性是私有的，不能在类外部直接访问',
+    },
+    {
+      key: 'public',
+      name: '公有属性',
+      desc: '在类中定义的属性，表示该属性是公有的，可以在类的外部访问',
+    },
+    {
+      key: 'protected',
+      name: '受保护属性',
+      desc: '在类中使用单下划线前缀（如 _attribute）定义的属性，表示该属性是受保护的，建议仅在类及其子类中访问',
+    },
+
+    {
       key: 'intersection',
       name: '交集函数',
       desc: '用于计算两个集合的交集的内置函数: set1.intersection(set2) 返回两个集合中都包含的元素',
