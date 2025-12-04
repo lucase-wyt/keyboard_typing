@@ -6,6 +6,128 @@ const pythonWords = {
   isBuiltin: true,
   words: [
     {
+      key: 'b64encode(content.encode())',
+
+      name: 'Base64编码函数',
+      desc: 'python 标准库base64 中的方法：用于将二进制数据编码为Base64字符串的内置函数: b64encoded = base64.b64encode(content.encode())',
+    },
+    {
+      key: 'b64decode(content).decode()',
+      name: 'Base64解码函数',
+      desc: 'python 标准库base64 中的方法：用于将Base64字符串解码为二进制数据的内置函数: content = base64.b64decode(b64encoded).decode()',
+    },
+    {
+      key: 'namedtuple',
+      name: '命名元组',
+      desc: 'python中 标准库 collections 中的方法：用于创建命名元组的内置函数: Point = namedtuple("Point", ["x", "y"]) 创建一个名为 Point 的命名元组类型，具有 x 和 y 两个字段',
+    },
+    {
+      key: 'deque',
+      name: '双端队列',
+      desc: 'python中 标准库 collections 中的方法：用于创建双端队列的内置函数: d = deque([1, 2, 3]) 创建一个包含元素 1、2、3 的双端队列',
+    },
+    {
+      key: 'defaultdict',
+      name: '默认字典',
+      desc: 'python中 标准库 collections 中的方法：用于创建带有默认值的字典的内置函数: d = defaultdict(int) 创建一个默认值为整数的字典',
+    },
+    {
+      key: 'Counter',
+      name: '计数器',
+      desc: 'python中 标准库 collections 中的方法：用于计数可哈希对象的内置函数: c = Counter(["a", "b", "c", "a", "b", "a"]) 创建一个计数器，统计列表中每个元素出现的次数',
+    },
+    {
+      key: 'OrderedDict',
+      name: '有序字典',
+      desc: 'python中 标准库 collections 中的方法：用于创建有序字典的内置函数: od = OrderedDict() 创建一个有序字典，保持插入顺序',
+    },
+    {
+      key: 'hashlib',
+      name: '哈希库',
+      desc: 'python中 标准库 hashlib 中的方法：用于生成哈希值的内置库: import hashlib 导入 hashlib 库以使用各种哈希算法，如 MD5、SHA1、SHA256 等',
+    },
+    {
+      key: 'heapq',
+      name: '堆队列算法库',
+      desc: 'python中 标准库 heapq 中的方法：用于实现堆队列算法的内置库: import heapq 导入 heapq 库以使用堆排序和优先队列功能',
+    },
+    {
+      key: 'itertools',
+      name: '迭代器函数库',
+      desc: 'python中 标准库 itertools 中的方法：用于创建高效迭代器的内置库: import itertools 导入 itertools 库以使用无限迭代器、排列组合等功能',
+    },
+    {
+      key: 'itertools.permutations(`ABCD`)',
+      name: '排列函数',
+      desc: '用于生成输入序列所有可能排列的内置函数: itertools.permutations(iterable, r=None) 返回输入序列的所有长度为 r 的排列，如果 r 未指定则默认为输入序列的长度',
+    },
+    {
+      key: 'itertools.combinations(`ABCD`, 2)',
+      name: '组合函数',
+      desc: '用于生成输入序列所有可能组合的内置函数: itertools.combinations(iterable, r) 返回输入序列的所有长度为 r 的组合',
+    },
+    {
+      key: 'itertools.product(`AB`, `12`)',
+      name: '笛卡尔积函数',
+      desc: '用于生成输入序列的笛卡尔积的内置函数: itertools.product(*iterables, repeat=1) 返回输入序列的笛卡尔积，可以通过 repeat 参数指定重复次数',
+    },
+    {
+      key: 'itertools.cycle(`ABC`)',
+      name: '循环迭代函数',
+      desc: '用于无限循环迭代输入序列的内置函数: itertools.cycle(iterable) 返回一个无限循环的迭代器，依次返回输入序列中的元素',
+    },
+    {
+      key: 'os.path',
+      name: '路径操作模块',
+      desc: 'python中 标准库 os.path 中的方法：用于进行路径操作的内置模块: import os.path 导入 os.path 模块以使用路径拼接、分割、获取文件名等功能',
+    },
+    {
+      key: 'dirname(path)',
+      name: '获取目录名函数',
+      desc: '用于获取指定路径的目录名的内置函数: os.path.dirname(path) 返回路径 path 的目录部分',
+    },
+    {
+      key: 'exists(path)',
+      name: '路径是否存在函数',
+      desc: '用于检查指定路径是否存在的内置函数: os.path.exists(path) 如果路径存在则返回 True，否则返回 False',
+    },
+    {
+      key: 'getsize(path)',
+      name: '获取文件大小函数',
+      desc: '用于获取指定路径的文件大小的内置函数: os.path.getsize(path) 返回文件的字节大小',
+    },
+    {
+      key: 'getatime(path)',
+      name: '获取最后访问时间函数',
+      desc: '用于获取指定路径的最后访问时间的内置函数: os.path.getatime(path) 返回文件的最后访问时间（以秒为单位的时间戳）',
+    },
+    {
+      key: 'isfile(path)',
+
+      name: '是否为文件函数',
+      desc: '用于检查指定路径是否为文件的内置函数: os.path.isfile(path) 如果路径是文件则返回 True，否则返回 False',
+    },
+    {
+      key: 'isdir(path)',
+      name: '是否为目录函数',
+      desc: '用于检查指定路径是否为目录的内置函数: os.path.isdir(path) 如果路径是目录则返回 True，否则返回 False',
+    },
+    {
+      key: 'join(path1, path2, ...)',
+      name: '路径拼接函数',
+      desc: '用于将多个路径拼接成一个路径的内置函数: os.path.join(path1, path2, ...) 返回拼接后的路径',
+    },
+    {
+      key: 'splitext(path)',
+      name: '分离文件扩展名函数',
+      desc: '用于分离指定路径的文件扩展名的内置函数: os.path.splitext(path) 返回一个元组 (root, ext)，其中 root 是文件名，ext 是扩展名',
+    },
+    {
+      key: 'uuid',
+      name: 'UUID生成库',
+      desc: 'python中 标准库 uuid 中的方法：用于生成唯一标识符的内置库: import uuid 导入 uuid 库以使用 UUID 生成函数',
+    },
+    {
       key: 'private',
       name: '私有属性',
       desc: '在类中使用双下划线前缀（如 __attribute）定义的属性，表示该属性是私有的，不能在类外部直接访问',
